@@ -1,5 +1,4 @@
 #include <Arduino.h>
-
 int trigPin = 7;
 int echoPin = 8;
 int ledPin = 13;
@@ -15,14 +14,23 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int distance, duration;
+  int duration, distance;
+
   digitalWrite(trigPin, HIGH);
   delay(10);
   digitalWrite(trigPin, LOW);
 
-  //finding distance and duration
   duration = pulseIn(echoPin, HIGH);
-  Serial.println("Duration: " + duration);
-  distance = (duration / 2) * 29.1;
-  Serial.print("Distance: " + distance);
+
+  distance = duration / 58;
+  Serial.print("Distance in CM: ");
+  Serial.println(distance);
+
+  if (distance < 20){
+    digitalWrite(ledPin, HIGH);
+  } else if (distance > 20 && distance < 40){
+    digitalWrite(ledPin, LOW);
+  } else {
+    digitalWrite(ledPin, HIGH);
+  }
 }
